@@ -1,5 +1,6 @@
 // kernel entry
 #include "console.h"
+#include "descriptor_tables.h"
 
 int kern_logo()
 {
@@ -21,4 +22,9 @@ int kern_logo()
 
 void kern_entry() {
     kern_logo();
+
+    init_descriptor_tables();
+
+    asm volatile("int $0x3");
+    asm volatile("int $0x4");
 }

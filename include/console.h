@@ -15,4 +15,8 @@ void console_clear();
 // Output a null-terminated ASCII string to the console.
 void console_write(char *c);
 
+void console_write_hex(u32int n);
+
+void console_write_dec(u32int n);
+
 #endif // CONSOLE_H
