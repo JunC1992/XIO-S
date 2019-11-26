@@ -13,8 +13,13 @@ typedef          short s16int;
 typedef unsigned char  u8int;
 typedef          char  s8int;
 
+// vga
 void outb(u16int port, u8int value);
 u8int inb(u16int port);
 u16int inw(u16int port);
+
+// mem
+void memcpy(u8int *dest, const u8int *src, u32int len);
+void memset(u8int *dest, u8int val, u32int len);
 
 #endif // COMMON_H
