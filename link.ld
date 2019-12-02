@@ -6,8 +6,9 @@
 ENTRY(start)
 SECTIONS
 {
-
-    .text 0x100000 :
+    . =  0x100000 ;
+    PROVIDE( kern_start = . );
+    .text :
     {
         code = .; _code = .; __code = .;
         *(.text)
@@ -30,4 +31,5 @@ SECTIONS
     }
 
     end = .; _end = .; __end = .;
+    PROVIDE( kern_end = . );
 }

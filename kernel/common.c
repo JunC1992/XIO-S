@@ -73,3 +73,13 @@ char *strcat(char *dest, const char *src)
     // TODO: implement this yourself!
     return 0;
 }
+
+s32int strlen(const char* src)
+{
+    const char *eos = src; 
+
+    while (*eos++)     
+        ;                
+
+    return (eos - src - 1);
+}
