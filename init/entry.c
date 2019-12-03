@@ -3,9 +3,9 @@
 #include "console.h"
 #include "descriptor_tables.h"
 #include "timer.h"
+#include "multiboot.h"
+#include "memory.h"
 
-extern u8int kern_start[];
-extern u8int kern_end[];
 
 int kern_logo()
 {
@@ -32,9 +32,11 @@ void kern_entry() {
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
+    printk("\n");
 
     //asm volatile("sti");
     init_timer(50);
-    printk("kernel start at:\t0x%08X\n", kern_start);
-    printk("kernel end at:\t\t0x%08X\n", kern_end);
+
+    // mm
+    mem_show();
 }

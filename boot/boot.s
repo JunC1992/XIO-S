@@ -32,10 +32,12 @@ mboot:
     dd  start                   ; Kernel entry point (initial EIP).
 
 [GLOBAL start]                  ; Kernel entry point.
+[GLOBAL glb_mboot_ptr]			; Global multiboot infomation
 [EXTERN kern_entry]                   ; This is the entry point of our C code
 
 start:
     ; Load multiboot information:
+	mov [glb_mboot_ptr], ebx
     push    ebx
 
     ; Execute the kernel:
@@ -44,3 +46,7 @@ start:
     jmp $                       ; Enter an infinite loop, to stop the processor
                                 ; executing whatever rubbish is in the memory
                                 ; after our kernel!
+
+; global multiboot ptr
+glb_mboot_ptr:
+	resb 4
