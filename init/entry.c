@@ -86,4 +86,6 @@ __attribute__((section(".init.text"))) void kern_entry() {
 
     //kern_logo();
     kern_init();
+
+    for(;;);
 }
