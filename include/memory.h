@@ -9,6 +9,8 @@
 #define PMM_PAGE_SIZE 0x1000
 #define PAGE_MAX_SIZE (PMM_MAX_SIZE/PMM_PAGE_SIZE) 
 
+#define STACK_SIZE 8192
+
 extern u8int kern_start[];
 extern u8int kern_end[];
 

@@ -50,6 +50,12 @@ void memset(void *dest, u8int val, u32int len)
     }
 }
 
+// Write len copies of val into dest.
+void bzero(void *dest, u32int len)
+{
+   memset(dest, 0, len);
+}
+
 // Compare two strings. Should return -1 if 
 // str1 < str2, 0 if they are equal or 1 otherwise.
 int strcmp(char *str1, char *str2)

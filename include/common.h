@@ -21,6 +21,7 @@ u16int inw(u16int port);
 // mem
 void memcpy(void *dest, const void *src, u32int len);
 void memset(void *dest, u8int val, u32int len);
+void bzero(void *dest, u32int len);
 
 // strings
 s32int strlen(const char* src);

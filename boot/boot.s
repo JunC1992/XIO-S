@@ -13,6 +13,7 @@ MBOOT_CHECKSUM      equ -(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 
 
 [BITS 32]                       ; All instructions should be 32-bit.
+section .init.text
 
 [GLOBAL mboot]                  ; Make 'mboot' accessible from C.
 [EXTERN code]                   ; Start of the '.text' section.
@@ -32,21 +33,26 @@ mboot:
     dd  start                   ; Kernel entry point (initial EIP).
 
 [GLOBAL start]                  ; Kernel entry point.
-[GLOBAL glb_mboot_ptr]			; Global multiboot infomation
+[GLOBAL mboot_ptr_tmp]			; Global multiboot infomation
 [EXTERN kern_entry]                   ; This is the entry point of our C code
 
 start:
     ; Load multiboot information:
-	mov [glb_mboot_ptr], ebx
+	mov [mboot_ptr_tmp], ebx
     push    ebx
 
     ; Execute the kernel:
     cli                         ; Disable interrupts.
+	mov esp, STACK_TOP
+	and esp, 0FFFFFFF0H
+	mov ebp, 0
+
     call kern_entry 			; call our main() function.
-    jmp $                       ; Enter an infinite loop, to stop the processor
+    ;jmp $                       ; Enter an infinite loop, to stop the processor
                                 ; executing whatever rubbish is in the memory
                                 ; after our kernel!
-
+section .init.data
+stack: times 1024 db 0
+STACK_TOP equ $-stack-1
 ; global multiboot ptr
-glb_mboot_ptr:
-	resb 4
+mboot_ptr_tmp: dd 0
