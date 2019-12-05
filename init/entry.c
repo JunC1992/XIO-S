@@ -6,6 +6,7 @@
 #include "multiboot.h"
 #include "memory.h"
 #include "vmemory.h"
+#include "heap.h"
 
 // global mutilboot ptr
 multiboot_t *glb_mboot_ptr;
@@ -49,6 +50,12 @@ void kern_init() {
 
     // mm
     mem_show();
+    mem_init();
+    //vmm_init();
+
+    // mm alloc test
+    //init_heap();
+    //test_heap();
 }
 
 __attribute__((section(".init.text"))) void kern_entry() {
@@ -84,8 +91,6 @@ __attribute__((section(".init.text"))) void kern_entry() {
 	// set global mutilboot ptr
 	glb_mboot_ptr = mboot_ptr_tmp + PAGE_OFFSET;
 
-    //kern_logo();
     kern_init();
-
     for(;;);
 }

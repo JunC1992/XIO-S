@@ -30,7 +30,7 @@ typedef u32int pte_t;
 
 extern pgd_t pgd_kern[PGD_SIZE];
 
-void init_vmm();
+void vmm_init();
 void switch_pgd(u32int pd);
 void map(pgd_t *pgd_now, u32int va, u32int pa, u32int flags);
 void unmap(pgd_t *pgd_now, u32int va);

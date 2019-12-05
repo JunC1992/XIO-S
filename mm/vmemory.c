@@ -9,7 +9,7 @@ pgd_t pgd_kern[PGD_SIZE] __attribute__ ((aligned(PAGE_SIZE)));
 // page table
 static pte_t pte_kern[PTE_COUNT][PTE_SIZE] __attribute__ ((aligned(PAGE_SIZE)));
 
-void init_vmm()
+void vmm_init()
 {
 	// 0xC0000000, page dirctory index
 	u32int kern_pte_first_idx = PGD_INDEX(PAGE_OFFSET);
