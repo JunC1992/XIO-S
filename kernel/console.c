@@ -3,9 +3,10 @@
 //             but rewritten for JamesM's kernel tutorials.
 
 #include "console.h"
+#include "vmemory.h"
 
 // The VGA framebuffer starts at 0xB8000.
-u16int *video_memory = (u16int *)0xB8000;
+u16int *video_memory = (u16int *)(0xB8000 + PAGE_OFFSET);
 // Stores the cursor position.
 u8int cursor_x = 0;
 u8int cursor_y = 0;

@@ -51,11 +51,16 @@ void kern_init() {
     // mm
     mem_show();
     mem_init();
-    //vmm_init();
+    vmm_init();
 
     // mm alloc test
-    //init_heap();
-    //test_heap();
+    init_heap();
+    test_heap();
+
+    // hlt cpu
+    while (1) {
+        asm volatile ("hlt");
+    }
 }
 
 __attribute__((section(".init.text"))) void kern_entry() {
@@ -92,5 +97,4 @@ __attribute__((section(".init.text"))) void kern_entry() {
 	glb_mboot_ptr = mboot_ptr_tmp + PAGE_OFFSET;
 
     kern_init();
-    for(;;);
 }

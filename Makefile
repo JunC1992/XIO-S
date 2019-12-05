@@ -42,3 +42,7 @@ run:
 	#qemu -fda floppy.img -boot a -nographic
 	qemu -fda floppy.img -boot a -curses 
 	#add '-nographic' option if using server of linux distro, such as fedora-server,or "gtk initialization failed" error will occur.
+
+debug:
+	qemu -S -s -fda floppy.img -boot a -curses 
+
