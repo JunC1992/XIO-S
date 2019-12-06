@@ -13,7 +13,7 @@ static u32int heap_max = HEAP_START;
 // heap header
 static header_t *heap_first;
 
-void init_heap(){
+void heap_init(){
     heap_first = 0;
 }
 

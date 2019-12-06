@@ -31,6 +31,7 @@ __attribute__((section(".init.data"))) pgd_t *pte_hign = (pgd_t *)0x3000;
         "     /  \\     | |     / ___ \\   | |_| |        ___) |        \n",
         "    /_/\\_\\   |___|   /_/   \\_\\   \\___/        |____/      \n"
     };
+    printk("\n");
 
     console_clear(); 
     int i;
@@ -40,14 +41,34 @@ __attribute__((section(".init.data"))) pgd_t *pte_hign = (pgd_t *)0x3000;
     return 0;
 }
 
+int flag = 0;
+s32int threadB(void* arg){
+    while(1){
+        if(flag == 1){
+            printk("B");   
+            flag = 0;
+        }
+    }
+}
+
+void AaB(){
+    kthread(threadB, NULL);
+    while(1){
+        if(flag != 1){
+            printk("A");   
+            flag = 1;
+        }
+    }
+}
+
 void kern_init() {
     kern_logo();
-
+    // init gdt&idt
     init_descriptor_tables();
 
+    // test interrupet
     //asm volatile("int $0x3");
     //asm volatile("int $0x4");
-    printk("\n");
 
     //asm volatile("sti");
     init_timer(50);
@@ -56,13 +77,17 @@ void kern_init() {
     mem_show();
     mem_init();
     vmm_init();
-
-    // mm alloc test
-    init_heap();
+    heap_init();
     //test_heap();
 
     // process sched
     sched_init();
+
+    // enable time interreput
+    asm volatile("sti");
+    // A&B
+    AaB();
+
     // hlt cpu
     while (1) {
         asm volatile ("hlt");

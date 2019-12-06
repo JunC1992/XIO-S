@@ -14,7 +14,7 @@ typedef struct header {
     u32int length : 31;
 } header_t;
 
-void init_heap();
+void heap_init();
 void* kmalloc(u32int len);
 void kfree();
 void test_heap();

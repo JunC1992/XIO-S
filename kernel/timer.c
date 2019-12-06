@@ -4,15 +4,12 @@
 #include "timer.h"
 #include "isr.h"
 #include "console.h"
+#include "sched.h"
 
-u32int tick = 0;
 
 static void timer_callback(registers_t regs)
 {
-    tick++;
-    console_write("Tick: ");
-    console_write_dec(tick);
-    console_write("\n");
+    schedule();
 }
 
 void init_timer(u32int frequency)
