@@ -7,6 +7,10 @@
 #include "memory.h"
 #include "vmemory.h"
 #include "heap.h"
+#include "sched.h"
+
+// global kernel stack top
+u32int kern_stack_top;
 
 // global mutilboot ptr
 multiboot_t *glb_mboot_ptr;
@@ -41,8 +45,8 @@ void kern_init() {
 
     init_descriptor_tables();
 
-    asm volatile("int $0x3");
-    asm volatile("int $0x4");
+    //asm volatile("int $0x3");
+    //asm volatile("int $0x4");
     printk("\n");
 
     //asm volatile("sti");
@@ -55,8 +59,10 @@ void kern_init() {
 
     // mm alloc test
     init_heap();
-    test_heap();
+    //test_heap();
 
+    // process sched
+    sched_init();
     // hlt cpu
     while (1) {
         asm volatile ("hlt");
@@ -89,7 +95,7 @@ __attribute__((section(".init.text"))) void kern_entry() {
 	asm volatile ("mov %0, %%cr0" : : "r" (cr0));
 	
 	// switch kernel stack
-	u32int kern_stack_top = ((u32int)kern_stack + STACK_SIZE) & 0xFFFFFFF0;
+	kern_stack_top = ((u32int)kern_stack + STACK_SIZE) & 0xFFFFFFF0;
 	asm volatile ("mov %0, %%esp\n\t"
 			"xor %%ebp, %%ebp" : : "r" (kern_stack_top));
 

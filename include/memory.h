@@ -11,6 +11,8 @@
 
 #define STACK_SIZE 8192
 
+extern u32int kern_stack_top;
+
 extern u8int kern_start[];
 extern u8int kern_end[];
 
